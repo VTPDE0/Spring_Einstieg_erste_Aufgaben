@@ -12,6 +12,7 @@ public class HelloWorldController {
     // Die Methode helloWorld() gibt den String "Hello World!" zurück.
     //In diesem Kontext bedeutet die Rückgabe eines Strings, dass diese Zeichenkette als Antwort auf die HTTP-Anfrage gesendet wird.
     //Es gibt kein println, weil wir hier nicht auf der Konsole drucken, sondern eine Webantwort senden
+    //Aber wie aufrufe ich Methoden eine nach andere? soll ich noch eine Anfrage an localhost schicken, sodass Ausgabe wird aktualisiert?
     @GetMapping("/hello")
     public String helloWorld() {
         return "Hello World!";
