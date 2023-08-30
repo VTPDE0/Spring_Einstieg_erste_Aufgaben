@@ -9,7 +9,7 @@ import java.util.List;
 @RequestMapping("/cart")
 public class CartController {
 
-    // Ein einfacher Warenkorb als Liste von Produkten
+    // Ein Warenkorb als Liste von Produkten
     private List<Product> cart = new ArrayList<>();
 
     // GET-Endpunkt, um Produkte im Warenkorb abzurufen
@@ -18,7 +18,9 @@ public class CartController {
         return cart;
     }
 
-    // POST-Endpunkt, um ein Produkt zum Warenkorb hinzuzufügen
+    // POST-Endpunkt, um ein Produkt zum Warenkorb hinzuzufügen,
+    // in cmd braucht man folgender Befehl auszuführen:
+    // curl -X POST -H "Content-Type: application/json" -d "{\"name\":\"Apfel\",\"price\":0.5}" http://localhost:8080/cart
     @PostMapping
     public void addProduct(@RequestBody Product product) {
         cart.add(product);
