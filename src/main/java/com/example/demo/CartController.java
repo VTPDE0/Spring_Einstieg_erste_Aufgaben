@@ -77,9 +77,9 @@ public class CartController {
 
     @DeleteMapping("/{cartId}/product/{name}")
     public ResponseEntity<String> removeProductByNameFromCart(@PathVariable int cartId, @PathVariable String name) {
-        List<Product> selectedCart = carts.get(cartId); // Wählen Sie den Warenkorb mit der gegebenen ID aus
+        List<Product> selectedCart = carts.get(cartId);
 
-        // Wenn der Warenkorb nicht existiert, geben Sie eine entsprechende Nachricht zurück
+        // Wenn der Warenkorb nicht existiert wird entsprechende Antwort gegeben
         if (selectedCart == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Warenkorb mit ID " + cartId + " nicht gefunden.");
         }
