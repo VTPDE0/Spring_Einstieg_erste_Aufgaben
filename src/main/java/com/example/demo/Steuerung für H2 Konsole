@@ -1,0 +1,26 @@
+http://localhost:8080/h2-console
+
+//Produkt hinzufügen
+INSERT INTO product (name, price, cart_id) VALUES ('Produktname', 9.99, 2);
+
+z.B.:
+INSERT INTO product (name, price, cart_id) VALUES ('Apfel', 5.50, 1);
+INSERT INTO product (name, price, cart_id) VALUES ('Birne', 3.20, 1);
+INSERT INTO product (name, price, cart_id) VALUES ('Banane', 1.30, 2);
+INSERT INTO product (name, price, cart_id) VALUES ('Kirsche', 4.80, 2);
+
+//Alle Produkte anzeigen:
+SELECT * FROM product;
+
+//Suche nach Produkt mit Name
+SELECT * FROM product WHERE name = 'Produktname';
+
+//Suche nach Produkt mit id
+SELECT * FROM product WHERE id= <produktId>;
+
+//Produkt mit ID löschen
+DELETE FROM product WHERE id = <produktId>;
+
+//Bestimmte Warenkorb komplett leeren
+DELETE FROM product WHERE cart_id = <cartId>;
+

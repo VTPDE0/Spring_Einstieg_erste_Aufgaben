@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.ProductRepository;
+
 @RestController
 @RequestMapping("/cart")
 /*
@@ -18,6 +21,8 @@ curl http://localhost:8080/cart/{cartId}
  */
 
 public class CartController {
+
+    @Autowired ProductRepository productRepository;
 
     // Eine Map, die Warenkörbe (Listen von Produkten) mit einer eindeutigen ID verbindet
     private Map<Integer, List<Product>> carts = new HashMap<>();
@@ -52,6 +57,8 @@ public class CartController {
     public void addProductToCart(@PathVariable int cartId, @RequestBody Product product) {
         // Wenn der Warenkorb noch nicht existiert, wird er erstellt.
         carts.computeIfAbsent(cartId, k -> new ArrayList<>()).add(product);
+        // Produkt auch in der Datenbank speichern
+        productRepository.save(product);
     }
 
 
@@ -62,7 +69,13 @@ public class CartController {
     @DeleteMapping("/{cartId}/clear")
     public ResponseEntity<String> clearCart(@PathVariable int cartId) {
         if (carts.containsKey(cartId)) {
+
+            // Den Warenkorb leeren
             carts.get(cartId).clear();
+
+            // Produkte aus der Datenbank löschen
+            productRepository.deleteAll();
+
             return ResponseEntity.ok("Warenkorb " + cartId + " wurde geleert.");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Warenkorb mit ID " + cartId + " nicht gefunden.");
@@ -94,7 +107,13 @@ public class CartController {
         }
 
         if (productToRemove != null) {
+
+            // Produkt aus dem Warenkorb entfernen
             selectedCart.remove(productToRemove);
+
+            // Produkt auch aus der Datenbank löschen
+            productRepository.delete(productToRemove);
+
             return ResponseEntity.ok(productToRemove.getName() + " wurde aus dem Einkaufswagen " + cartId + " entfernt.");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produktname nicht im Einkaufswagen " + cartId + " gefunden.");
