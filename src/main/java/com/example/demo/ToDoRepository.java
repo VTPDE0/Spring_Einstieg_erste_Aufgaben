@@ -1,7 +1,8 @@
 package com.example.demo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-//change für commit
+import java.util.List;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
 @Repository //obwohl man muss nicht wirklich hier diese Annotation machen, da diese Klasse von JpaRepository (das Gleiche gilt auch für einer seiner Unterinterfaces) erbt
 public interface ToDoRepository extends JpaRepository<ToDoElement, Long> {
 
-    // Eine Methode, um alle ToDo-Elemente für einen bestimmten Benutzer basierend auf der benutzerId abzurufen.
     List<ToDoElement> findByBenutzerId(Long benutzerId);
+
+    Optional<ToDoElement> findByIdAndBenutzerId(Long id, Long benutzerId);
+    // Eine Methode, um alle ToDo-Elemente für einen bestimmten Benutzer basierend auf der benutzerId abzurufen.
 }
