@@ -1,26 +1,38 @@
 http://localhost:8080/h2-console
+jdbc:h2:mem:testdb
 
-//Produkt hinzufügen
-INSERT INTO product (name, price, cart_id) VALUES ('Produktname', 9.99, 2);
+_________________Benutzer
 
-z.B.:
-INSERT INTO product (name, price, cart_id) VALUES ('Apfel', 5.50, 1);
-INSERT INTO product (name, price, cart_id) VALUES ('Birne', 3.20, 1);
-INSERT INTO product (name, price, cart_id) VALUES ('Banane', 1.30, 2);
-INSERT INTO product (name, price, cart_id) VALUES ('Kirsche', 4.80, 2);
+1. Benutzer hinzufügen:
+INSERT INTO benutzer (benutzername, passwort) VALUES ('hiersollBenutzernamesein', 'HiersollPasswortsein');
 
-//Alle Produkte anzeigen:
-SELECT * FROM product;
+2. Alle Benutzer anzeigen:
+SELECT * FROM benutzer;
 
-//Suche nach Produkt mit Name
-SELECT * FROM product WHERE name = 'Produktname';
+3.Benutzer mithilfe des Benutzernamens finden:
+SELECT * FROM benutzer WHERE benutzername = 'IhrBenutzername';
 
-//Suche nach Produkt mit id
-SELECT * FROM product WHERE id= <produktId>;
 
-//Produkt mit ID löschen
-DELETE FROM product WHERE id = <produktId>;
+4.Benutzer löschen:
+DELETE FROM benutzer WHERE id = IhreBenutzerID;
 
-//Bestimmte Warenkorb komplett leeren
-DELETE FROM product WHERE cart_id = <cartId>;
+_________________ToDo-Elemente
 
+1.ToDo-Element hinzufügen:
+INSERT INTO todo (text, erledigt, benutzer_id) VALUES ('IhrText', false, IhreBenutzerID);
+
+
+2.Alle ToDo-Elemente eines Benutzers anzeigen:
+SELECT * FROM todo WHERE benutzer_id = IhreBenutzerID;
+
+
+3.Ein bestimmtes ToDo-Element anzeigen:
+SELECT * FROM todo WHERE id = IhrToDoID;
+
+
+4.ToDo-Element aktualisieren:
+UPDATE todo SET text = 'NeuerText', erledigt = true WHERE id = IhrToDoID;
+
+
+5.ToDo-Element löschen:
+DELETE FROM todo WHERE id = IhrToDoID;

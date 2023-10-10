@@ -5,20 +5,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity  // Diese Klasse ist eine Entität und wird mit einer Datenbanktabelle verknüpft.
+@Entity  // Diese Klasse ist eine Entität und wird mit einer Datenbanktabelle verknüpft. Warum den sagt mir Konsole dass noch keine TODO Tabelle gibt es?
 public class ToDoElement {
 
     @Id  // Dieses Feld ist der Primärschlüssel.
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Der Wert für dieses Feld wird automatisch generiert.
-    private Long id;  // Eindeutige ID für jedes ToDo-Element.
+    private Long id;  // ID für jedes ToDo-Element.
 
     private String text;  // Der Text des ToDo-Elements.
 
-    private boolean erledigt;  // Gibt an, ob das ToDo-Element erledigt wurde oder nicht.
+    private boolean erledigt;  // Gibt an, ob das ToDo-Element erledigt war oder noch nicht.
 
     private Long benutzerId;  // Die ID des Benutzers, zu dem dieses ToDo-Element gehört.
 
-    // Standardkonstruktor, der von JPA benötigt wird.
+    // Standardkonstruktor der von JPA benötigt ist.
     public ToDoElement() {}
 
     // Konstruktor mit Parametern.
