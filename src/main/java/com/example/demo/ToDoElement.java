@@ -19,7 +19,6 @@ public class ToDoElement {
 
     private boolean erledigt;  // Gibt an, ob das ToDo-Element erledigt war oder noch nicht.
 
-    private Long benutzerId;  // Die ID des Benutzers, zu dem dieses ToDo-Element gehört.
 
     @ManyToOne
     @JoinColumn(name = "benutzer_id")
@@ -32,7 +31,6 @@ public class ToDoElement {
     public ToDoElement(String text, boolean erledigt, Long benutzerId) {
         this.text = text;
         this.erledigt = erledigt;
-        this.benutzerId = benutzerId;
     }
 
 
@@ -66,14 +64,6 @@ public class ToDoElement {
     }
 
 
-    public Long getBenutzerId() {
-        return benutzerId;
-    }
-
-
-    public void setBenutzerId(Long benutzerId) {
-        this.benutzerId = benutzerId;
-    }
     public Benutzer getBenutzer() {
         return benutzer;
     }

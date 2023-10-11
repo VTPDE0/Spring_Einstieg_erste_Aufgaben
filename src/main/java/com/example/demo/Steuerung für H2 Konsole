@@ -5,7 +5,7 @@ jdbc:h2:mem:testdb
 _________________Benutzer
 
 1. Benutzer hinzufügen:
-INSERT INTO benutzer (benutzername, passwort) VALUES ('hiersollBenutzernamesein', 'HiersollPasswortsein');
+INSERT INTO benutzer (benutzername, passwort) VALUES ('hier_soll_Benutzername_sein', 'hier_soll_Passwort_sein');
 
 2. Alle Benutzer anzeigen:
 SELECT * FROM benutzer;
@@ -20,20 +20,20 @@ DELETE FROM benutzer WHERE id = IhreBenutzerID;
 _________________ToDo-Elemente
 
 1.ToDo-Element hinzufügen:
-INSERT INTO todo (text, erledigt, benutzer_id) VALUES ('IhrText', false, IhreBenutzerID);
+INSERT INTO to_do_element (text, erledigt, benutzer_id) VALUES ('IhrText', false_oder_true?, hier_soll_BenutzerID_sein);
 
 
 2.Alle ToDo-Elemente eines Benutzers anzeigen:
-SELECT * FROM todo WHERE benutzer_id = IhreBenutzerID;
+SELECT * FROM to_do_element WHERE benutzer_id = hier_soll_BenutzerID_sein;
 
 
 3.Ein bestimmtes ToDo-Element anzeigen:
-SELECT * FROM todo WHERE id = IhrToDoID;
+SELECT * FROM to_do_element WHERE id = hier_soll_ToDoID_sein;
 
 
 4.ToDo-Element aktualisieren:
-UPDATE todo SET text = 'NeuerText', erledigt = true WHERE id = IhrToDoID;
+UPDATE to_do_element SET text = 'NeuerText', erledigt = true WHERE id = hier_soll_ToDoID_sein;
 
 
 5.ToDo-Element löschen:
-DELETE FROM todo WHERE id = IhrToDoID;
+DELETE FROM to_do_element WHERE id = hier_soll_ToDoID_sein;
