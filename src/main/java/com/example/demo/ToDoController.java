@@ -5,6 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,52 +19,56 @@ import java.util.Optional;
 public class ToDoController {
 
     @Autowired
-    private ToDoRepository todoRepository;
+    private ToDoRepository toDoRepository;
 
-    @Autowired
-    private BenutzerRepository benutzerRepository;
+    @GetMapping("/list")
+    public ResponseEntity<?> getTodosForAuthenticatedUser(HttpServletRequest request) {
+        Benutzer authenticatedUser = (Benutzer) request.getAttribute("authenticatedUser");
+        List<ToDoElement> todosForUser = toDoRepository.findByBenutzer(authenticatedUser);
+        return ResponseEntity.ok(todosForUser);
+    }
 
-    // Erstellt ein neues ToDo-Element für den angemeldeten Benutzer
     @PostMapping
-    public ToDoElement erstellen(@RequestBody ToDoElement todo, @RequestHeader("benutzerId") Long benutzerId) {
-        Optional<Benutzer> benutzer = benutzerRepository.findById(benutzerId);
-        if (benutzer.isPresent()) {
-            todo.setBenutzer(benutzer.get());
-            return todoRepository.save(todo);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Benutzer nicht gefunden");
-        }
+    public ResponseEntity<?> createTodo(HttpServletRequest request, @RequestBody ToDoElement todo) {
+        Benutzer authenticatedUser = (Benutzer) request.getAttribute("authenticatedUser");
+        todo.setBenutzer(authenticatedUser);
+        ToDoElement savedTodo = toDoRepository.save(todo);
+        return ResponseEntity.ok(savedTodo);
     }
 
-    // Gibt die ToDo-Liste des angemeldeten Benutzers zurück
-    @GetMapping
-    public List<ToDoElement> alleTodos(@RequestHeader("benutzerId") Long benutzerId) {
-        return todoRepository.findByBenutzerId(benutzerId);
-    }
-
-    // Gibt ein bestimmtes ToDo-Element des angemeldeten Benutzers anhand seiner ID zurück
     @GetMapping("/{id}")
-    public ToDoElement getTodoById(@PathVariable Long id, @RequestHeader("benutzerId") Long benutzerId) {
-        return todoRepository.findByIdAndBenutzerId(id, benutzerId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDo nicht gefunden"));
+    public ResponseEntity<?> getTodo(HttpServletRequest request, @PathVariable Long id) {
+        Benutzer authenticatedUser = (Benutzer) request.getAttribute("authenticatedUser");
+        ToDoElement todo = toDoRepository.findByIdAndBenutzer(id, authenticatedUser);
+        if (todo == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(todo);
     }
 
-    // Aktualisiert ein bestimmtes ToDo-Element des angemeldeten Benutzers anhand seiner ID
     @PutMapping("/{id}")
-    public ToDoElement updateTodo(@PathVariable Long id, @RequestBody ToDoElement updatedTodo, @RequestHeader("benutzerId") Long benutzerId) {
-        return todoRepository.findByIdAndBenutzerId(id, benutzerId).map(todo -> {
-            todo.setText(updatedTodo.getText());
-            todo.setErledigt(updatedTodo.isErledigt());
-            return todoRepository.save(todo);
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDo nicht gefunden"));
+    public ResponseEntity<?> updateTodo(HttpServletRequest request,
+                                        @PathVariable Long id,
+                                        @RequestBody ToDoElement updatedTodo) {
+        Benutzer authenticatedUser = (Benutzer) request.getAttribute("authenticatedUser");
+        ToDoElement existingTodo = toDoRepository.findByIdAndBenutzer(id, authenticatedUser);
+        if (existingTodo == null) {
+            return ResponseEntity.notFound().build();
+        }
+        existingTodo.setText(updatedTodo.getText());
+        existingTodo.setErledigt(updatedTodo.isErledigt());
+        ToDoElement savedTodo = toDoRepository.save(existingTodo);
+        return ResponseEntity.ok(savedTodo);
     }
 
-    // Löscht ein bestimmtes ToDo-Element des angemeldeten Benutzers anhand seiner ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTodo(@PathVariable Long id, @RequestHeader("benutzerId") Long benutzerId) {
-        return todoRepository.findByIdAndBenutzerId(id, benutzerId).map(todo -> {
-            todoRepository.delete(todo);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDo nicht gefunden"));
+    public ResponseEntity<?> deleteTodo(HttpServletRequest request, @PathVariable Long id) {
+        Benutzer authenticatedUser = (Benutzer) request.getAttribute("authenticatedUser");
+        ToDoElement todo = toDoRepository.findByIdAndBenutzer(id, authenticatedUser);
+        if (todo == null) {
+            return ResponseEntity.notFound().build();
+        }
+        toDoRepository.delete(todo);
+        return ResponseEntity.noContent().build();
     }
 }

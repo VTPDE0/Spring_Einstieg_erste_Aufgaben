@@ -43,7 +43,7 @@ public class SimpleAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Wenn alles in Ordnung ist, fahren Sie mit der nächsten Filterkette fort
+        // Wenn alles in Ordnung ist, fahren mit der nächsten Filterkette fort
         filterChain.doFilter(request, response);
     }
 }
