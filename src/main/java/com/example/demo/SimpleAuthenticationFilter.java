@@ -1,3 +1,6 @@
+/*Aktuell wird nicht benötigt, da ich überprüfe aktuell nur ID und nicht passwort ode Benutzername
+
+
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,3 +50,5 @@ public class SimpleAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
+
+ */
