@@ -15,11 +15,11 @@ public class Application {
 	}
 	@Configuration
 	public class FilterConfig {
-
+//Filter UserIdFilter hier schlaten wir ein
 		@Bean
-		public FilterRegistrationBean<SimpleAuthenticationFilter> authenticationFilter() {
-			FilterRegistrationBean<SimpleAuthenticationFilter> registrationBean = new FilterRegistrationBean<>();
-			registrationBean.setFilter(new SimpleAuthenticationFilter());
+		public FilterRegistrationBean<UserIdFilter> authenticationFilter() {
+			FilterRegistrationBean<UserIdFilter> registrationBean = new FilterRegistrationBean<>();
+			registrationBean.setFilter(new UserIdFilter());
 			registrationBean.addUrlPatterns("/todos/*"); // Der Filter wird nur für URLs unter "/todos" angewendet
 			return registrationBean;
 		}
