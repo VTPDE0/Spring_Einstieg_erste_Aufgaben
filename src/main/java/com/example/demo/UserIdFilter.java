@@ -9,13 +9,15 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Optional;
 
 public class UserIdFilter implements Filter {
 
-    @Autowired
-    private BenutzerRepository benutzerRepository;
+    private final BenutzerRepository benutzerRepository;
+
+    public UserIdFilter(BenutzerRepository benutzerRepository) {
+        this.benutzerRepository = benutzerRepository;
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

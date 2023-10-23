@@ -36,3 +36,10 @@ UPDATE to_do_element SET text = 'NeuerText', erledigt = true WHERE id = hier_sol
 
 5.ToDo-Element löschen:
 DELETE FROM to_do_element WHERE id = hier_soll_ToDoID_sein;
+
+__________________
+Benutzer registrieren:
+Invoke-RestMethod -Uri http://localhost:8080/benutzer -Method POST -Body '{"benutzername":"V
+
+Ein neues ToDo-Element erstellen:
+Invoke-RestMethod -Uri http://localhost:8080/todos -Method POST -Headers @{"benutzerId"="1"} -Body '{"text":"Java lernen", "erledigt":false}' -ContentType "application/json"
